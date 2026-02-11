@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> Book: {{ package.title }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>Full Name</label><br>
+    <input type="text" name="full_name" required><br><br>
+    
+    <label>Email</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Phone</label><br>
+    <input type="text" name="phone" required><br><br>
+
+    <label>Number of People</label><br>
+    <input type="number" name="number_of_people" required><br><br>
+
+    <label>Message</label><br>
+    <input type="text" name="message" required><br><br>
+
+    <button type="submit"> Submit Booking</button>
+</form>
+
+{% endblock %}

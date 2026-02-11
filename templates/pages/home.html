@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- start banner Area -->
+<section class="banner-area" id="home">
+    <!-- Start Header Area -->
+	<header class="default-header">
+		<nav class="navbar navbar-expand-lg  navbar-light">
+			<div class="container">
+					<a class="navbar-brand" href="index.html">
+					<img src="{% static 'watalii/img/logo.png' %}" alt="">
+					</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="text-white lnr lnr-menu"></span>
+					</button>
+
+					<div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarSupportedContent">
+					<ul class="navbar-nav">
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li><a href="#about">About</a></li>									
+						<li><a href="#secvice">Service</a></li>
+						<li><a href="{% url 'list' %}">Packages</a></li>
+						<li><a href="#faq">Faq</a></li>
+						<li><a href="{% url 'contact'%}">Contact</a></li>
+						<!-- Dropdown -->
+						<li class="dropdown">
+							<a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+							  account
+							</a>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="generic.html">log in</a>
+							  <a class="dropdown-item" href="elements.html">sign up</a>
+							</div>
+						  </li>
+					  </ul>
+					</div>						
+			  </div>
+		</nav>
+	</header>
+	<!-- End Header Area -->				
+</section>
+
+<section class="default-banner active-blog-slider">
+    <div class="item-slider relative" style="background-image: url('{% static "watalii/img/slider.jpg" %}');background-size: cover;">
+        <div class="overlay" style="background: rgba(0,0,0,.3)"></div>
+        <div class="container">
+            <div class="row fullscreen justify-content-center align-items-center">
+                <div class="col-md-10 col-12">
+                    <div class="banner-content text-center">
+                        <h4 class="text-white mb-20 text-uppercase">Discover the Colorful World</h4>
+                        <h1 class="text-uppercase text-white">New Adventure</h1>
+                        <p class="text-white">
+                            
+                        </p>
+                        <a href="{% url 'list' %}" class="text-uppercase header-btn">DISCOVER NOW</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-slider relative" style="background-image: url('{% static "watalii/img/slider6.jpg" %}');background-size: cover;">
+        <div class="overlay" style="background: rgba(0,0,0,.3)"></div>
+        <div class="container">
+            <div class="row fullscreen justify-content-center align-items-center">
+                <div class="col-md-10 col-12">
+                    <div class="banner-content text-center">
+                        <h4 class="text-white mb-20 text-uppercase">Discover the Colorful World</h4>
+                        <h1 class="text-uppercase text-white">New Trip</h1>
+                        <p class="text-white">
+                        </p>
+                        <a href="#" class="text-uppercase header-btn">Discover Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="item-slider relative" style="background-image: url('{% static "watalii/img/slider5.jpg" %}');background-size: cover;">
+        <div class="overlay" style="background: rgba(0,0,0,.3)"></div>
+        <div class="container">
+            <div class="row fullscreen justify-content-center align-items-center">
+                <div class="col-md-10 col-12">
+                    <div class="banner-content text-center">
+                        <h4 class="text-white mb-20 text-uppercase">Discover the Colorful World</h4>
+                        <h1 class="text-uppercase text-white">New Experience</h1>
+                        <p class="text-white">
+                        </p>
+                        <a href="{% url 'list' %}" class="text-uppercase header-btn">Discover Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Start about Area -->
+<section class="section-gap info-area" id="about">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="menu-content pb-40 col-lg-8">
+                <div class="title text-center">
+                    <h1 class="mb-10">Featured Tour Packages</h1>
+                    <p>Choose your next adventure with Watalii.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="single-info row mt-40">
+            {% for package in packages %}
+            <div class="col-lg-6 col-md-12 mt-120 text-center no-padding info-left">
+                <div class="info-thumb">
+                    <img src="{{ package.image.url }}" class="img-fluid" alt="{{ package.title }}">
+
+                     <h4 class="mt-3">{{ package.title }}</h4>
+                     <p>{{ package.description|truncatewords:15 }}</p>
+
+                     <p><strong>KES {{ package.price }}</strong></p>
+                    
+                    <a href="{% url 'details' package.id %}" class="primary-btn text-uppercase">
+                        View Details
+                    </a>
+
+                    <a href="{% url 'book_tour' package.id %}" class="primary-btn text-uppercase">
+                        Book Now
+                    </a>
+                </div>
+            {% endfor %}    
+            </div>
+
+            <div class="col-lg-6 col-md-12 no-padding info-rigth">
+                <div class="info-content">
+                    <h2 class="pb-30">We Realize that <br> there are reduced <br> Wastege Stand out</h2>
+                    <p>
+                        inappropriate behavior is often laughed off as “boys will be boys,” women face higher conduct standards.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

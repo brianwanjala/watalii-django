@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1> Booking Successful</h1>
+
+<p> Thank you for booking <strong> {{package.title}}</strong></p>
+<p> We will contact you soon. </p>
+
+<a href=" {% url 'list'%}"> Back to Tours</a>
+
+{% endblock %}
