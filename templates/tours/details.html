@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<a href="{% url 'home' %}">Back to homepage</a>
 <h1>{{package.title}}</h1>
 
 <img src="{{ package.image.url }}" width="500">
