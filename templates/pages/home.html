@@ -23,10 +23,19 @@
                 <li><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'list' %}">Tours</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
+                {% if user.is_authenticated %}
+
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+
+                {% endif %} 
 
                 <li class="dropdown">
                     <a class="dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                        Account
+                        {% if user.is_authenticated %}
+                            Hi {{user.username}}
+                        {% else %}
+                            Account
+                        {% endif %}    
                     </a>
                     <div class="dropdown-menu">
 						{% if user.is_authenticated %}

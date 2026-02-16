@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import TourPackage, Booking, ContactMessage
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def list(request):
@@ -13,6 +15,7 @@ def details(request, pk):
 
     return render(request, 'tours/details.html', {'package': package})
 
+@login_required(login_url='login')
 def book_tour(request, pk):
     package = get_object_or_404(TourPackage, pk=pk)
     
@@ -22,9 +25,11 @@ def book_tour(request, pk):
         phone = request.POST.get("phone")
         number_of_people = request.POST.get("number_of_people")
         message = request.POST.get("message")
+        
 
         booking = Booking.objects.create(
             package=package,
+            user=request.user,
             full_name=full_name,
             email=email,
             phone=phone,

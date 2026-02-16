@@ -2759,3 +2759,27 @@ h6 {
 .switch-wrap p {
   margin: 0;
 }
+.bg-slider-5 {
+    background-image: url("../img/slider5.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bg-slider-6 {
+    background-image: url("../img/slider6.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.bg-slider-main {
+    background-image: url("../img/slider.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.3);
+}

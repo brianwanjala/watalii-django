@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 
 class Destination(models.Model):
@@ -26,6 +28,8 @@ class TourPackage(models.Model):
 
 
 class Booking(models.Model):
+    package = models.ForeignKey(TourPackage, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     STATUS_CHOICES = (
     ('pending', 'Pending'),
     ('approved', 'Approved'),
@@ -41,7 +45,7 @@ class Booking(models.Model):
     booked_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.full_name} - {self.package.title}"
+        return f"{self.full_name} booked {self.package.title}"
 
 class ContactMessage(models.Model):
     full_name = models.CharField(max_length=200)
