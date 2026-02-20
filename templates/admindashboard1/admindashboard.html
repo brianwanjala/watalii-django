@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="banner-area relative" style="background: #06103b;">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row fullscreen align-items-center justify-content-between">
+            <div class="col-lg-12">
+                <div class="banner-content text-center">
+                    <h1 class="text-white">Admin Dashboard</h1>
+                    <p class="text-white link-nav">
+                        <a href="{% url 'home' %}">Home</a>
+                        <span class="lnr lnr-arrow-right"></span>
+                        Admin Dashboard
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-gap">
+    <div class="container">
+
+        <!-- Stats -->
+        <div class="row text-center mb-5">
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5>Pending Bookings</h5>
+                    <h2 class="text-warning">{{ pending_count }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5>Approved Bookings</h5>
+                    <h2 class="text-success">{{ approved_count }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5>Cancelled Bookings</h5>
+                    <h2 class="text-danger">{{ cancelled_count }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bookings Table -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm p-4">
+                    <h4 class="mb-4">All Bookings</h4>
+
+                    {% if bookings %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>User</th>
+                                        <th>Tour</th>
+                                        <th>People</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for booking in bookings %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ booking.user.username }}</td>
+                                        <td>{{ booking.package.title }}</td>
+                                        <td>{{ booking.number_of_people }}</td>
+                                        <td>{{ booking.booked_at|date:"M d, Y - H:i" }}</td>
+
+                                        <td>
+                                            {% if booking.status == "approved" %}
+                                                <span class="badge badge-success">Approved</span>
+                                            {% elif booking.status == "pending" %}
+                                                <span class="badge badge-warning">Pending</span>
+                                            {% elif booking.status == "cancelled" %}
+                                                <span class="badge badge-danger">Cancelled</span>
+                                            {% else %}
+                                                <span class="badge badge-secondary">N/A</span>
+                                            {% endif %}
+                                        </td>
+
+                                        <td>
+                                            {% if booking.status == "pending" %}
+                                                <a href="{% url 'approve_booking' booking.id %}" class="btn btn-sm btn-success">
+                                                    Approve
+                                                </a>
+
+                                                <a href="{% url 'cancel_booking_admin' booking.id %}" class="btn btn-sm btn-danger">
+                                                    Cancel
+                                                </a>
+                                            {% elif booking.status == "approved" %}
+                                                <span class="text-success">Approved</span>
+                                            {% else %}
+                                                <span class="text-muted">No action</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    {% else %}
+                        <p class="text-muted">No bookings found.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{% endblock %}

@@ -7,5 +7,3 @@ def home(request):
     packages = TourPackage.objects.all()[:6]
     return render(request, 'pages/home.html', {"packages": packages})
 
-def tours(request):
-    return render(request, 'tours/elements.html')

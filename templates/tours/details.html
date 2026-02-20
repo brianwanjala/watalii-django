@@ -14,9 +14,9 @@
 <p><strong>Duration:</strong>{{package.duration_days}}</p>
 <p><strong>Available Slots:</strong>{{package.available_slots}}</p>
 
-<a href="{% url 'book_tour' package.id %}">Book This Tour</a><br><br>
+<a href="{% url 'book_tour' package.id %}"class="primary-btn text-uppercase">Book This Tour</a><br><br>
 
 
-<a href="{% url 'list' %}">Back to Tours</a><br><br>
+<a href="{% url 'list' %}"class="primary-btn text-uppercase">Back to Tours</a><br><br>
 
 {% endblock %}

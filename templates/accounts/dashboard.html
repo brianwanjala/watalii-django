@@ -1,26 +1,136 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
 
-<h2>My Bookings</h2>
+<section class="banner-area relative" style="background: #06103b;">
+    <div class="overlay overlay-bg"></div>
+    <div class="container">
+        <div class="row fullscreen align-items-center justify-content-between">
+            <div class="col-lg-12">
+                <div class="banner-content text-center">
+                    <h1 class="text-white">Dashboard</h1>
+                    <p class="text-white link-nav">
+                        <a href="{% url 'home' %}">Home</a>
+                        <span class="lnr lnr-arrow-right"></span>
+                        Dashboard
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-{% if bookings %}
-    <table border="1" cellpadding="10">
-        <tr>
-            <th>Tour</th>
-            <th>People</th>
-            <th>Date</th>
-        </tr>
+<section class="section-gap">
+    <div class="container">
 
-        {% for booking in bookings %}
-        <tr>
-            <td>{{ booking.package.title }}</td>
-            <td>{{ booking.number_of_people }}</td>
-            <td>{{ booking.booked_at }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>You have not made any bookings yet.</p>
-{% endif %}
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card shadow-sm p-4">
+                    <h3>Hello, {{ user.username }} </h3>
+                                      
+                    <a href="{% url 'home' %}" class="btn btn-outline-primary btn-block mb-2">
+                        Back to Home
+                    </a>
+
+                    <a href="{% url 'list' %}" class="btn btn-outline-success btn-block mb-2">
+                        Book a Tour
+                    </a>
+
+                    <a href="{% url 'logout_view' %}" class="btn btn-danger btn-block">
+                        Logout
+                    </a>
+                    <p class="text-muted mb-0">
+                        Here are your bookings and activity on Watalii Tours.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="row text-center mb-5">
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5>Total Bookings</h5>
+                    <h2 class="text-primary">{{ bookings.count }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5>Active Tours</h5>
+                    <h2 class="text-success">{{ bookings.count }}</h2>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card shadow-sm p-4">
+                    <h5>Account Status</h5>
+                    <h2 class="text-info">Active</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Table -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-sm p-4">
+                    <h4 class="mb-4">My Bookings</h4>
+
+                    {% if bookings %}
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tour Package</th>
+                                        <th>People</th>
+                                        <th>Date Booked</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for booking in bookings %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ booking.package.title }}</td>
+                                        <td>{{ booking.number_of_people }}</td>
+                                        <td>{{ booking.booked_at|date:"M d, Y - H:i" }}</td>
+                                        <td>
+                                            {% if booking.status == "pending" %}
+                                                <span class="badge badge-warning">Pending</span>
+                                            {% elif booking.status == "approved" %}
+                                                <span class="badge badge-success">Approved</span>
+                                            {% elif booking.status == "Cancelled" %}
+                                                <span class="badge badge-danger">Cancelled</span>
+                                            {% else %}
+                                                <span class="badge badge-secondary">{{ booking.status }}</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if booking.status == "pending" %}
+                                                <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm">
+                                                    Cancel
+                                                </a>
+                                            {% else %}
+                                                <span class="text-muted">---</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">You have no bookings yet.</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
 {% endblock %}
